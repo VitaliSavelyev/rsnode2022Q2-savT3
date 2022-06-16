@@ -16,11 +16,6 @@ export class Router implements RouterInt {
         endpoint[method] = handler;
     }
 
-    // _checkPatch(path: string) {
-    //     const queryObj = url.parse(path, true).pathname.split('/');
-    //     return queryObj.slice(1)[1];
-    // }
-
     public get(path: string, handler: Handler ): void {
         return this.createEndpoint("GET", path, handler);
     }

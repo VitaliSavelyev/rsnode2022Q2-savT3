@@ -4,8 +4,13 @@ import {parseJson} from './middleware/parseJson';
 import {bodyParser} from './middleware/bodyParser';
 import {getUrlId} from './middleware/getUrlId';
 import {router} from './data/user/user-router';
+import path from 'path';
 
-dotenv.config();
+dotenv.config({
+    path: path.join(__dirname, '../.env')
+});
+
+const { PORT } = process.env
 
 const server = new Server();
 
@@ -14,6 +19,6 @@ server.addMiddleware(getUrlId);
 server.addMiddleware(bodyParser);
 server.addRouter(router);
 
-server.listen(3001, () => {
+server.listen(PORT || '4000', () => {
     console.log('Server is running...');
 })

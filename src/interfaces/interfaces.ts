@@ -23,7 +23,7 @@ export interface Response extends ServerResponse {
 }
 
 export interface Send {
-    (data: UserInt[] | UserInt | CustomError, err: number): void;
+    (data: UserInt[] | UserInt | CustomError | string, err: number): void;
 }
 
 export interface CustomError {

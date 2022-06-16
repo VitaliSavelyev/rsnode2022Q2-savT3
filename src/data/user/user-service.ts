@@ -2,8 +2,8 @@ import { UserInt } from '../../interfaces/interfaces';
 import User from './user-model'
 
 let usersList: UserInt[] = [
-    // {id: '5f576cd3-9b97-44a0-ad3a-b883fa20036f', age: 10, name: 'Fedya', hobbies: ['run']},
-    // {id: '1f576cd3-9b97-44a0-ad3a-b883fa20036f', age: 18, name: 'Katya', hobbies: ['read']}
+    // {id: '5f576cd3-9b97-44a0-ad3a-b883fa20036f', age: 10, username: 'Fedya', hobbies: ['run']},
+    // {id: '1f576cd3-9b97-44a0-ad3a-b883fa20036f', age: 18, username: 'Katya', hobbies: ['read']}
 ];
 
 const createUser = async (user: UserInt): Promise<UserInt> => {

@@ -6,7 +6,6 @@ import {getAllUsers, getUserById, createUser, deleteUser, updateUser} from "./us
 const router = new Router();
 
 router.get('/users', async (_req: Request, res: Response) => {
-    console.log(10)
     if (res.send) {
         try {
             const users: UserInt[] = await getAllUsers();
@@ -22,8 +21,9 @@ router.get('/users/:id', async (req: Request, res:Response) => {
             const user: UserInt | null = await getUserById(req.urlId);
             if(user) {
                 res.send(user, HTTP_STATUS_CODE.COMPLETE.OK);
+            } else {
+                res.send(ERROR_MESSAGE.NOT_FOUND.ELEM_ID(req.urlId), HTTP_STATUS_CODE.ERROR.NOT_FOUND);
             }
-            res.send(ERROR_MESSAGE.NOT_FOUND.ELEM_ID(req.urlId), HTTP_STATUS_CODE.ERROR.NOT_FOUND);
         }
     catch (err) {
         res.send(ERROR_MESSAGE.INTERNAL_SERVER_ERROR(), HTTP_STATUS_CODE.ERROR.INTERNAL_SERVER_ERROR);
@@ -51,9 +51,10 @@ router.put('/users/:id', async (req:Request, res:Response) => {
         try {
             const updatedUser: UserInt | null = await updateUser(req.body, req.urlId)
             if (updatedUser) {
-                res.send(updatedUser, HTTP_STATUS_CODE.COMPLETE.OK)
+                res.send(updatedUser, HTTP_STATUS_CODE.COMPLETE.OK);
+            } else {
+                res.send(ERROR_MESSAGE.NOT_FOUND.ELEM_ID(req.urlId), HTTP_STATUS_CODE.ERROR.NOT_FOUND);
             }
-            res.send(ERROR_MESSAGE.NOT_FOUND.ELEM_ID(req.urlId), HTTP_STATUS_CODE.COMPLETE.OK)
         } catch (err) {
             res.send(ERROR_MESSAGE.INTERNAL_SERVER_ERROR(), HTTP_STATUS_CODE.ERROR.INTERNAL_SERVER_ERROR);
         }
@@ -64,9 +65,10 @@ router.delete('/users/:id', async(req: Request, res:Response) => {
         try {
             const deletedUser = await deleteUser(req.urlId);
             if (deletedUser) {
-                res.send({message: ''}, HTTP_STATUS_CODE.COMPLETE.OK);
+                res.send('', HTTP_STATUS_CODE.COMPLETE.NO_CONTENT);
+            } else {
+                res.send(ERROR_MESSAGE.NOT_FOUND.ELEM_ID(req.urlId), HTTP_STATUS_CODE.ERROR.NOT_FOUND);
             }
-            res.send(ERROR_MESSAGE.NOT_FOUND.ELEM_ID(req.urlId), HTTP_STATUS_CODE.ERROR.NOT_FOUND);
         } catch (err) {
             res.send(ERROR_MESSAGE.INTERNAL_SERVER_ERROR(), HTTP_STATUS_CODE.ERROR.INTERNAL_SERVER_ERROR);
         }
