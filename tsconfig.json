@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
-    "allowJs": false,
-    "outDir": "./build",
-    "rootDir": "./src",
+    "baseUrl": "node_modules/@types",
+    "lib": [
+      "es6"
+    ],
+    "outDir": "dist",
+    "esModuleInterop": true,
     "downlevelIteration": false,
     "strict": true,
     "noEmitOnError": true,
@@ -15,12 +16,17 @@
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules/"],
-  "include": ["src/**/*"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "include": [
+    "src/**/*",
+    "*.ts"
+  ]
 }
