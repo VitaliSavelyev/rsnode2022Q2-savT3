@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import {Server} from './server'
+import {ServerCustom} from './server'
 import {parseJson} from './middleware/parseJson';
 import {bodyParser} from './middleware/bodyParser';
 import {getUrlId} from './middleware/getUrlId';
@@ -12,13 +12,15 @@ dotenv.config({
 
 const { PORT } = process.env
 
-const server = new Server();
+const server = new ServerCustom();
 
 server.addMiddleware(parseJson);
 server.addMiddleware(getUrlId);
 server.addMiddleware(bodyParser);
 server.addRouter(router);
 
-server.listen(PORT || '4000', () => {
+server.listen(PORT || '4000', function () {
     console.log('Server is running...');
 })
+
+export = server

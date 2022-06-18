@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'app.ts'),
+  target: 'node',
   module: {
     rules: [
       {

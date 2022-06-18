@@ -4,11 +4,12 @@ import * as http from 'http';
 import {IncomingMessage, ServerResponse} from 'http';
 import {HTTP_STATUS_CODE, ERROR_MESSAGE} from './constants/constants';
 import {Request, Response} from './interfaces/interfaces'
+import {Server} from 'http';
 
-export class Server {
+export class ServerCustom {
     private middleware: any[];
 
-    private server: any;
+    private server: Server;
 
     private emitter: EventEmitter;
 
@@ -69,5 +70,9 @@ export class Server {
 
     public listen(port: string, callback: any): void {
         this.server.listen(port, callback);
+    }
+
+    public close():void {
+        this.server.close();
     }
 }
