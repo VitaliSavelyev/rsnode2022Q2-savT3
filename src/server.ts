@@ -12,18 +12,20 @@ export class ServerCustom {
     private server: Server;
 
     private emitter: EventEmitter;
+    pid: number;
 
     constructor() {
         this.emitter = new EventEmitter;
         this.server = this._createServer();
         this.middleware = [];
+        this.pid = 0;
     }
 
     private _createServer() {
         return http.createServer((request: IncomingMessage, response: ServerResponse) => {
             const res: Response = response;
             const req: Request = request;
-            this.middleware.forEach(middleware => middleware(req, res));
+            this.middleware.forEach(middleware => middleware(req, res, this.pid));
             if (res.send) {
                 try {
                     req.on('end', () => {
@@ -68,7 +70,10 @@ export class ServerCustom {
         return `${path}:${method}`;
     }
 
-    public listen(port: string, callback: any): void {
+    public listen(port: string, callback: any, pid?:number): void {
+     if (pid) {
+         this.pid = pid
+     }
         this.server.listen(port, callback);
     }
 

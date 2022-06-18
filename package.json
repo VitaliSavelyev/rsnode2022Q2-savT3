@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "start:dev": "nodemon src/app.ts",
+    "start:multi": "nodemon src/app-multi.ts",
     "start:prod": "webpack --mode=production && node ./dist/bundle.js"
   },
   "repository": {
