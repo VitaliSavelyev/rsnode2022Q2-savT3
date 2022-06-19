@@ -76,7 +76,7 @@ export class ServerCustom {
 
     private _checkTypeField(body: any): boolean {
         return typeof body?.age !== "number" || typeof body?.username !== "string" ||
-            body.hobbies.some((elem: any) => typeof elem !== "string");
+            body?.hobbies.some((elem: any) => typeof elem !== "string");
     }
 
     public listen(port: string, callback: any, pid?:number): void {
