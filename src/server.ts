@@ -1,17 +1,17 @@
 import {EventEmitter} from 'events';
 import {Router} from './data/router';
 import * as http from 'http';
-import {IncomingMessage, ServerResponse} from 'http';
-import {HTTP_STATUS_CODE, ERROR_MESSAGE} from './constants/constants';
+import {IncomingMessage, Server, ServerResponse} from 'http';
+import {ERROR_MESSAGE, HTTP_STATUS_CODE} from './constants/constants';
 import {Request, Response} from './interfaces/interfaces'
-import {Server} from 'http';
 
 export class ServerCustom {
-    private middleware: any[];
+    private middleware: Function[];
 
     private server: Server;
 
     private emitter: EventEmitter;
+
     pid: number;
 
     constructor() {
@@ -30,14 +30,18 @@ export class ServerCustom {
                 try {
                     req.on('end', () => {
                         if (res.send && req.method) {
-                            const needCheckValid = (req.method === 'POST' || req.method === 'PUT') && req.body && (!req.body.age || !req.body.hobbies || !req.body.username);
+                            const needCheckValid = (req.method === 'POST' || req.method === 'PUT') && req.body && (!req.body?.age || !req.body?.hobbies || !req.body?.username);
                             if (needCheckValid) {
                                 res.send(ERROR_MESSAGE.BAD_REQUEST.VALID_ELEM(), HTTP_STATUS_CODE.ERROR.BAD_REQUEST);
                             } else {
-                                if (req.url) {
-                                    const emitted = this.emitter.emit(this._getRouterMask(req.url, req.method), req, res);
-                                    if (!emitted) {
-                                        res.send(ERROR_MESSAGE.NOT_FOUND.PAGE(), HTTP_STATUS_CODE.ERROR.NOT_FOUND);
+                                if(this._checkTypeField(req.body)){
+                                    res.send(ERROR_MESSAGE.BAD_REQUEST.VALID_TYPE_ELEM(), HTTP_STATUS_CODE.ERROR.BAD_REQUEST);
+                                } else {
+                                    if (req.url) {
+                                        const emitted = this.emitter.emit(this._getRouterMask(req.url, req.method), req, res);
+                                        if (!emitted) {
+                                            res.send(ERROR_MESSAGE.NOT_FOUND.PAGE(), HTTP_STATUS_CODE.ERROR.NOT_FOUND);
+                                        }
                                     }
                                 }
                             }
@@ -68,6 +72,11 @@ export class ServerCustom {
 
     private _getRouterMask(path: string, method: string): string {
         return `${path}:${method}`;
+    }
+
+    private _checkTypeField(body: any): boolean {
+        return typeof body?.age !== "number" || typeof body?.username !== "string" ||
+            body.hobbies.some((elem: any) => typeof elem !== "string");
     }
 
     public listen(port: string, callback: any, pid?:number): void {

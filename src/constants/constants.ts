@@ -18,7 +18,8 @@ export const ERROR_MESSAGE = {
     },
     BAD_REQUEST: {
         VALID_ID: (id:string) => ({message: `Your id (${id}) not valid`}),
-        VALID_ELEM: () => ({message: `Your request has not all required field`})
+        VALID_ELEM: () => ({message: `Your request has not all required field`}),
+        VALID_TYPE_ELEM: () => ({message: `Your request has not valid type field`})
     } ,
     INTERNAL_SERVER_ERROR: () => ({ message: 'The page cannot be displayed because an internal server error has occurred' })
 }

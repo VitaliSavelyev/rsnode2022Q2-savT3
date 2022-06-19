@@ -24,7 +24,7 @@ const pid: number = process.pid;
 
 if (cluster.isPrimary) {
     console.log(`MasterPid: ${pid}`)
-    const count = os.cpus().length;
+    const count: number = os.cpus().length;
     for (let i = 0; i < count; i++) {
         cluster.fork()
     }
