@@ -34,7 +34,7 @@ export class ServerCustom {
                             if (needCheckValid) {
                                 res.send(ERROR_MESSAGE.BAD_REQUEST.VALID_ELEM(), HTTP_STATUS_CODE.ERROR.BAD_REQUEST);
                             } else {
-                                if(this._checkTypeField(req.body)){
+                                if(req.body && this._checkTypeField(req.body)){
                                     res.send(ERROR_MESSAGE.BAD_REQUEST.VALID_TYPE_ELEM(), HTTP_STATUS_CODE.ERROR.BAD_REQUEST);
                                 } else {
                                     if (req.url) {

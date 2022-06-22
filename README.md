@@ -13,7 +13,7 @@ npm install
    To use horizontal scaling for application run ```npm run start:multi```.
 
 ## Commands
-- GET api/users is used to get all persons
-- GET api/users/${userId} is used to get user by userId
-- PUT api/users/{userId} is used to update existing user
-- DELETE api/users/${userId} is used to delete existing user from database
+- GET /users is used to get all persons
+- GET /users/${userId} is used to get user by userId
+- PUT /users/{userId} is used to update existing user
+- DELETE /users/${userId} is used to delete existing user from database
